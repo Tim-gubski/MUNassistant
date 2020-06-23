@@ -1,0 +1,77 @@
+#navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#landing-header{
+    width: 100vw;
+    height: 100vh;
+    color: white;
+    text-align: center;
+}
+
+#landing-header h1{
+    font-size: 6em;
+    margin-bottom: 300px;
+    padding: 30vh 0;
+}
+
+/* #landing-header h2{
+    color: rgba(200, 200, 200, 0.7);
+} */
+
+#signupBtn{
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    font-size: 2em;
+    font-weight: 500;
+    border: 0;
+    width: 20%;
+    transition: 0.3s;
+    border-radius: 0;
+}
+
+#signupBtn:hover{
+    background-color: rgba(0, 0, 0, 0.2);
+    color: rgb(207, 207, 207);
+    transition: 0.3s;
+}
+
+#signupBtn{
+    margin-top: 150px;
+}
+
+#second-img{
+    height: 300px;
+    text-align: center;
+}
+
+.card{
+    background-color: rgba(72, 0, 90, 0.8);
+    border-radius: 0;
+    color: rgba(255, 255, 255, 0.842);
+}
+
+.card h2{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 3em;
+}
+
+.card p{
+    width: 70%;
+    max-width: 1000px;
+    font-size: 1.3em;
+    margin: 0 auto;
+    margin-bottom: 3em;
+}
+
+.background{
+    background-image: url(https://vignette.wikia.nocookie.net/halo/images/8/84/United_nations_flag.png/revision/latest?cb=20140429003652);
+    background-size: 700px auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #4a90e1
+}

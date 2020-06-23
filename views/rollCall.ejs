@@ -1,0 +1,49 @@
+<%- include('./partials/header') %>
+<link rel="stylesheet" href="/stylesheets/rollCall.css" crossorigin="anonymous">
+
+</head>
+<body>
+<%- include('./partials/navbar') %>
+<%- include('./partials/sideNav') %>
+<div class="container pt-5">
+    <h1 id="header"><%= committee.name %> </h1>
+    <div class="table-responsive">
+        <table class="table table-fixed" id="delTable">
+            <thead>
+                <tr>
+                    <th scope="col" class="col-4">Delegation</th>
+                    <th scope="col" class="col-4">Present</th>
+                    <th scope="col" class="col-4">Present and Voting <span id="addButton">+</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <input type="text" name="delegation" placeholder="Add New Delegation" id="addDel">
+                <% committee.delegations.forEach(function(delegation){ %>
+                    <tr id="<%= delegation._id %>">
+                        <td class="col-4" id="name" class="name" contenteditable="true" data-gramm_editor="false" spellcheck="false"><span class="nameText"><%= delegation.name %></span><span class="deleteBtn" contenteditable="false"><i class="fa fa-trash" aria-hidden="true"></i></span></td>
+                        <% if(delegation.presentVoting == "none"){ %>
+                            <td class="col-4 presentSelector"></td>
+                            <td class="col-4 presentVotingSelector"></td>
+                        <% } else if(delegation.presentVoting == "present"){ %>
+                            <td class="col-4 presentSelector selected"></td>
+                            <td class="col-4 presentVotingSelector"></td>
+                        <% } else{ %>
+                            <td class="col-4 presentSelector selected"></td>
+                            <td class="col-4 presentVotingSelector selected"></td>
+                        <% } %> 
+                    </tr>
+                <% }) %> 
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container subButtons">
+    <a id="deselect" class="subButton">Deselect All</a>
+    <br>
+    <a id="save" class="subButton">Save</a>
+</div>
+
+
+<script src="/scripts/rollCall.js"></script>
+
+<%- include('./partials/footer') %> 

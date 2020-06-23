@@ -1,0 +1,24 @@
+body{
+    background: rgb(252,230,255);
+    background: linear-gradient(90deg, rgba(252,230,255,1) 0%, rgba(255,255,255,0.773546918767507) 50%, rgba(252,230,255,1) 100%);
+}
+
+.thumbnail img{
+    width:100%;
+}
+
+#committeeTable{
+    width: 50%;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+#openButton{
+    text-align: right;
+}
+
+#createDiv{
+    width: 50%;
+    margin: 0 auto;
+}

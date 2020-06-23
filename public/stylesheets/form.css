@@ -1,0 +1,57 @@
+body{
+    background-image: url(https://vignette.wikia.nocookie.net/halo/images/8/84/United_nations_flag.png/revision/latest?cb=20140429003652);
+    background-size: 1000px auto;
+    background-position: center 0px;
+    background-repeat: no-repeat;
+    background-color: #4a90e1;
+    color: white;
+    
+}
+
+#filter{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(30, 14, 54, 0.8);
+    z-index: -1;
+}
+
+
+.btn{
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    transition: 0.3s;
+}
+
+
+.itemBox{
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    transition: 0.3s;
+}
+
+.itemBox:hover{
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: none;
+    transition: 0.3s;
+}
+
+
+
+.form-control:focus{
+    background-color: rgba(255, 255, 255, 0.8);
+    outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
+}
+
+.subButton{
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.subButton:hover{
+    color: white;
+    text-decoration: none;
+}
+

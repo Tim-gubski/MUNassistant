@@ -1,0 +1,24 @@
+<%- include('./partials/header') %>
+<link rel="stylesheet" href="/stylesheets/rollCall.css" crossorigin="anonymous">
+<link rel="stylesheet" href="/stylesheets/speakinglist.css" crossorigin="anonymous">
+
+</head>
+<body>
+<%- include('./partials/navbar') %>
+<%- include('./partials/sideNav') %>
+<div class="container pt-5">
+    <h1 id="header"><%= committee.name %> </h1>
+    <ol>
+        <li>test</li>
+    </ol>
+</div>
+<div class="container subButtons">
+    <a id="clear" class="subButton">Clear</a>
+    <br>
+    <a id="save" class="subButton">Save</a>
+</div>
+
+
+<script src="/scripts/rollCall.js"></script>
+
+<%- include('./partials/footer') %> 
