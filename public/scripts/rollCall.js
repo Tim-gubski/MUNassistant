@@ -10,8 +10,10 @@ $("table").on("mouseleave",".presentSelector",function(){
 })
 
 $("table").on("click",".presentSelector",function(){
-    if($(this).hasClass("selected")){
+    if($(this).hasClass("selected") && !$(this).parent().children(".presentVotingSelector").hasClass("selected")){
         $(this).removeClass("selected")
+        $(this).parent().children(".presentVotingSelector").removeClass("selected")
+    }else if($(this).hasClass("selected") && $(this).parent().children(".presentVotingSelector").hasClass("selected")){
         $(this).parent().children(".presentVotingSelector").removeClass("selected")
     }else{
         $(this).addClass("selected")
@@ -38,7 +40,7 @@ $("table").on("click",".presentVotingSelector",function(){
     }
 })
 
-var counter = 0
+
 
 // $("input[type='text']").keypress(function(event){
 //     if(event.which === 13){
@@ -51,11 +53,17 @@ var counter = 0
 //     }
 // })
 
+var counter = 0
 $("#addButton").click(function(){
     // $("input[type='text']").stop().slideToggle(300)
-    $("tbody").append('<tr id="new' + counter + '"><td class="col-4" id="name" class="name" contenteditable="true" data-gramm_editor="false" spellcheck="false"><span class="nameText">New Delegation</span><span class="deleteBtn"><i class="fa fa-trash" aria-hidden="true"></i></span></td><td class="col-4 presentSelector"></td><td class="col-4 presentVotingSelector"></td></tr>')
-    $("#new"+counter+" #name").focus()
+    $("tbody").append('<tr id="new' + counter + '"><td class="col-4" id="name" class="name" contenteditable="false"><span class="nameText" contenteditable="true"  data-gramm_editor="false" spellcheck="false">New Delegation</span><span class="deleteBtn" contenteditable="false"><i class="fa fa-trash" aria-hidden="true"></i></span></td><td class="col-4 presentSelector"></td><td class="col-4 presentVotingSelector"></td></tr>')
+    sortTable()
+    $("#new"+counter+" #name .nameText").focus();
+    // $("#new"+counter+" #name .nameText").putCursorAtEnd();
+    counter++;
 })
+
+
 
 $("#deselect").click(function(){
     $(".presentSelector").removeClass("selected")
@@ -78,7 +86,6 @@ $("#save").click(function(){
         } else{
             var presentVoting = "none"
         }
-        var presentVoting 
         delegations.push({
             "id": $(this).attr("id"),
             "name": $(this).children("#name").text(),
@@ -96,7 +103,18 @@ $("#save").click(function(){
 
 //CANCEL NEW LINE IN EDITABLE
 
-$("td#name").keypress(function(e){ return e.which != 13; });
+$("table").on("keypress","td#name",function(e){ 
+    if(e.which == 13){
+        $(':focus').blur();
+        sortTable();
+    }else if($(this).children(".nameText").text()=="New Delegation"){
+        $(this).children(".nameText").text("");
+    }
+    
+    return e.which != 13; 
+})
+
+// $("td#name").keypress(function(e){ return e.which != 13; });
 
 //SUPER SORT
 $("body").click(function(){

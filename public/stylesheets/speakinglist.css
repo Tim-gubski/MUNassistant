@@ -1,4 +1,30 @@
-div.table-responsive{
-    width: 200px;
-    margin: 100px auto;
+.container{
+    max-width: 90%;
+}
+
+#time{
+    width: 100px;
+}
+
+#delegateSelector:focus{
+    border: 1px solid rgba(65, 30, 119, 0.6);
+    box-shadow: 0 0 7px rgba(65, 30, 119, 0.6);
+}
+
+.btn-secondary{
+    width: 70%;
+    border: none;
+    box-shadow: 0 0 2px rgba(65, 30, 119, 0.6);
+}
+
+#startBtn{
+    background:rgb(65, 184, 131);
+}
+
+#pauseBtn{
+    background: orange;
+}
+
+#stopBtn{
+    background: red;
 }

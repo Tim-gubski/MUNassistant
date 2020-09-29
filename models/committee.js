@@ -10,6 +10,18 @@ var itemSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Delegation"
         }
+    ],
+    speakingList:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Delegation"
+        }
+    ],
+    motions:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Motion"
+        }
     ]
 })
 

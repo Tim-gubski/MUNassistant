@@ -1,7 +1,10 @@
 var mongoose = require('mongoose')
 var itemSchema = new mongoose.Schema({
-    name: {type:String, unique:true},
-    presentVoting: String,
+    name: String,
+    presentVoting: {
+        type:String,
+        default:""
+    },
     speakingTime: {
         type:Number,
         default:0

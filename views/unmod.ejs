@@ -1,0 +1,45 @@
+<%- include('./partials/header') %>
+<link rel="stylesheet" href="/stylesheets/rollCall.css" crossorigin="anonymous">
+<link rel="stylesheet" href="/stylesheets/speakinglist.css" crossorigin="anonymous">
+<link rel="stylesheet" href="/stylesheets/timer.css" crossorigin="anonymous">
+<link rel="stylesheet" href="/stylesheets/unmod.css" crossorigin="anonymous">
+</head>
+<body>
+<%- include('./partials/navbar') %>
+<%- include('./partials/sideNav') %>
+<div class="container pt-5">
+    <div class="row">
+        <div class="col-12 text-center" id="timer">
+            <h1 id="header"><%= committee.name %></h1>
+            <h4>Unmoderated Caucus</h4>
+            <div class="form-group row justify-content-center mx-5 mt-3">
+                <label class="col-auto col-form-label">Duration:</label>
+                <div class="col-auto">
+                  <input type="text" class="form-control" id="time" placeholder="mm:ss" class="mt-4">
+                </div>
+            </div>
+
+            <h5 id="current-speaker">Select Speaker</h5>
+
+
+
+            <div id="app"></div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button class="btn btn-secondary" id="startBtn">Start</button>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-secondary" id="pauseBtn">Pause</button>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-secondary" id="stopBtn">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/scripts/speakinglist.js"></script>
+
+<%- include('./partials/footer') %> 

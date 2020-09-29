@@ -1,0 +1,30 @@
+input[type=text].form-control{
+    width: 120px;
+    transition: 0.3s;
+}
+
+input[type=text].form-control:focus{
+    outline: none;
+    box-shadow: none;
+    border: 1px solid rgba(65, 30, 119, 0.6);
+    box-shadow: 0 0 7px rgba(65, 30, 119, 0.6);
+    transition: 0.3s;
+}
+
+.progress{
+  width: 70%;
+  height: 20px;
+  margin: 20px auto;
+  background: grey;
+  border-radius: 10px;
+  transition: 1s;
+}
+
+#progress-bar{
+  background: rgb(65, 184, 131);
+  border-radius: 10px;
+  width: 100%;
+  transition: 1s;
+  transition-timing-function: linear;
+}
+

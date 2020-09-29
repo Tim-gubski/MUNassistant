@@ -1,0 +1,46 @@
+#delegateSelector, #type{
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    border-radius: 0;
+    border: none;
+    transition: 0.3s;
+}
+
+#delegateSelector:focus, #type:focus{
+    outline: none;
+    box-shadow: none;
+    border: 1px solid rgba(65, 30, 119, 0.6);
+    box-shadow: 0 0 3px rgba(65, 30, 119, 0.6);
+    transition: 0.3s;
+}
+
+input[type=text]{
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    border-radius: 0;
+    padding-left: 15px;
+    border: none;
+    transition: 0.3s;
+}
+
+input[type=text]:focus{
+    outline: none;
+    box-shadow: none;
+    border: 1px solid rgba(65, 30, 119, 0.6);
+    box-shadow: 0 0 3px rgba(65, 30, 119, 0.6);
+    transition: 0.3s;
+}
+
+
+
+tr:hover .deleteBtn{
+    visibility: visible;
+    width: 40px;
+    transition: 0.3s;
+}
+
+tr:hover #topic{
+    width: 85%;
+}

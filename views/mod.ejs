@@ -1,0 +1,71 @@
+<%- include('./partials/header') %>
+<link rel="stylesheet" href="/stylesheets/rollCall.css" crossorigin="anonymous">
+<link rel="stylesheet" href="/stylesheets/speakinglist.css" crossorigin="anonymous">
+<link rel="stylesheet" href="/stylesheets/timer.css" crossorigin="anonymous">
+<link rel="stylesheet" href="/stylesheets/mod.css" crossorigin="anonymous">
+</head>
+<body>
+<%- include('./partials/navbar') %>
+<%- include('./partials/sideNav') %>
+<div class="container pt-5">
+    <div class="row">
+        <div class="col-12 text-center" id="timer">
+            <h1 id="header"><%= committee.name %></h1>
+            <h4>Moderated Caucus</h4>
+            <div class="row justify-content-center mt-3">
+                <div class="col-6">
+                    <select class="form-control mb-1" name="delegate" id="delegateSelector">
+                        <option value="default"  disabled selected>--Delegations--</option>
+                        <% committee.delegations.forEach(function(delegation){ %> 
+                            <option value="<%= delegation.name %>" id="<%= delegation._id %>"><%= delegation.name %></option>
+                        <% }) %> 
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row justify-content-center mx-5 mt-3">
+                <label class="col-auto col-form-label">Duration:</label>
+                <div class="col-auto">
+                  <input type="text" class="form-control" id="duration" placeholder="mm:ss">
+                </div>
+
+                <label class="col-auto col-form-label">Speaking Time:</label>
+                <div class="col-auto">
+                  <input type="text" class="form-control" id="time" placeholder="m:ss">
+                </div>
+            </div>
+
+            <h5 id="current-speaker">Select Speaker</h5>
+
+
+
+            <div id="app"></div>
+
+
+            <h2 id="total-time">0:00/0:00</h2>
+            <div class="progress justify-content-end">
+                <div class="progress-bar" role="progressbar" aria-valuenow="70"
+                aria-valuemin="0" aria-valuemax="100" id="progress-bar">
+                  <span class="sr-only"></span>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button class="btn btn-secondary" id="startBtn">Start</button>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-secondary" id="pauseBtn">Pause</button>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-secondary" id="stopBtn">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/scripts/mod.js"></script>
+<script src="/scripts/speakinglist.js"></script>
+
+<%- include('./partials/footer') %> 

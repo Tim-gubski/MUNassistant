@@ -1,24 +1,73 @@
 <%- include('./partials/header') %>
 <link rel="stylesheet" href="/stylesheets/rollCall.css" crossorigin="anonymous">
 <link rel="stylesheet" href="/stylesheets/speakinglist.css" crossorigin="anonymous">
+<link rel="stylesheet" href="/stylesheets/timer.css" crossorigin="anonymous">
 
 </head>
 <body>
 <%- include('./partials/navbar') %>
 <%- include('./partials/sideNav') %>
 <div class="container pt-5">
-    <h1 id="header"><%= committee.name %> </h1>
-    <ol>
-        <li>test</li>
-    </ol>
-</div>
-<div class="container subButtons">
-    <a id="clear" class="subButton">Clear</a>
-    <br>
-    <a id="save" class="subButton">Save</a>
+    <div class="row">
+        <div class="col-8" id="speakinglist">
+            <h1 id="header"><%= committee.name %></h1>
+            <h4 id="header">Speaking List</h4>
+            <select class="form-control mb-1" name="delegate" id="delegateSelector">
+                <option value="default"  disabled selected>--Add Delegation--</option>
+                <% committee.delegations.forEach(function(delegation){ %> 
+                    <option value="<%= delegation.name %>" id="<%= delegation._id %>"> <%= delegation.name %></option>
+                <% }) %> 
+            </select>
+            <div class="table-responsive">
+                <table class="table table-fixed" id="delTable">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="col-12">Delegation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% committee.speakingList.forEach(function(delegation){ %>
+                            <tr id="<%= delegation._id %>">
+                                <td class="col-12" id="name" class="name" data-gramm_editor="false" spellcheck="false"><span class="nameText"><%= delegation.name %></span></td>
+                            </tr>
+                        <% }) %> 
+                    </tbody>
+                </table>
+            </div>
+            <div class="subButtons text-center">
+                <a id="clear" class="subButton">Clear</a>
+                <br>
+                <a id="save" class="subButton">Save</a>
+            </div>
+        </div>
+        <div class="col-4 text-center" id="timer">
+            <h2 class="header mt-5">Speaking Time</h2>
+            <% if(committee.speakingList.length == 0){ %> 
+                <h4 class="header" id="currentSpeaker">Add Speakers to List</h4>
+            <% }else{ %> 
+                <h4 class="header"><%= committee.speakingList[0].name %> </h4>
+            <% } %> 
+            
+            <input type="text" name="time" id="time" placeholder="m:ss" class="mt-3">
+
+            <div id="app"></div>
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <button class="btn btn-secondary" id="startBtn">Start</button>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-secondary" id="pauseBtn">Pause</button>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-secondary" id="stopBtn">Stop</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
-<script src="/scripts/rollCall.js"></script>
+
+<script src="/scripts/speakinglist.js"></script>
 
 <%- include('./partials/footer') %> 

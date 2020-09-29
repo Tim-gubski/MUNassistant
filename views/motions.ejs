@@ -1,0 +1,112 @@
+<%- include('./partials/header') %>
+<link rel="stylesheet" href="/stylesheets/rollCall.css" crossorigin="anonymous">
+<link rel="stylesheet" href="/stylesheets/motions.css" crossorigin="anonymous">
+
+
+</head>
+<body>
+<%- include('./partials/navbar') %>
+<%- include('./partials/sideNav') %>
+<div class="container pt-5">
+    <h1 id="header"><%= committee.name %></h1>
+    <h4 id="header">Motions</h4>
+    <div class="table-responsive">
+        <table class="table table-fixed" id="delTable">
+            <thead>
+                <tr>
+                    <th scope="col" class="col-3">Delegation</th>
+                    <th scope="col" class="col-2">Type</th>
+                    <th scope="col" class="col-2">Duration</th>
+                    <th scope="col" class="col-2">Speaking Time</th>
+                    <th scope="col" class="col-3">Topic  <span id="addButton">+</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="col-3">
+                        <select class="form-control" name="delegate" id="delegateSelector">
+                            <option value="default" disabled selected>--Delegation--</option>
+                            <% committee.delegations.forEach(function(delegation){ %> 
+                                <option value="<%= delegation.name %>" id="<%= delegation._id %>"><%= delegation.name %></option>
+                            <% }) %> 
+                        </select>
+                    </td>
+                    <td class="col-2">
+                        <select class="form-control" name="delegate" id="type">
+                            <option value="mod">Mod</option>
+                            <option value="unmod">UnMod</option>
+                            <option value="other">Other</option>
+                        </select>   
+                    </td>
+                    <td class="col-2">
+                        <input type="text" name="Duration" id="duration" placeholder="mm:ss">
+                    </td>
+                    <td class="col-2">
+                        <input type="text" name="SpeakingTime" id="speakingTime" placeholder="m:ss">
+                    </td>
+                    <td class="col-3">
+                        <input type="text" name="Topic" id="topic" placeholder="Topic">
+                        <span class="deleteBtn"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                    </td>
+                </tr>
+                <% if(committee.motions != null){ %> 
+                    <% committee.motions.forEach(function(motion){ %> 
+                        <tr>
+                            <td class="col-3">
+                                <select class="form-control" name="delegate" id="delegateSelector">
+                                    <option value="default" disabled>--Delegation--</option>
+                                    <% committee.delegations.forEach(function(delegation){ %> 
+                                        <% if(motion.delegation == delegation.id){ %> 
+                                            <option value="<%= delegation.name %>" id="<%= delegation._id %>" selected><%= delegation.name %></option>
+                                        <% }else{ %> 
+                                            <option value="<%= delegation.name %>" id="<%= delegation._id %>"><%= delegation.name %></option>
+                                        <% } %> 
+                                    <% }) %> 
+                                </select>
+                            </td>
+                            <td class="col-2">
+                                <select class="form-control" name="delegate" id="type">
+                                    <% if(motion.type == "mod"){ %> 
+                                        <option value="mod" selected>Mod</option>
+                                        <option value="unmod">UnMod</option>
+                                        <option value="other">Other</option>
+                                    <% } %> 
+                                    <% if(motion.type == "unmod"){ %> 
+                                        <option value="mod">Mod</option>
+                                        <option value="unmod" selected>UnMod</option>
+                                        <option value="other">Other</option>
+                                    <% } %> 
+                                    <% if(motion.type == "other"){ %> 
+                                        <option value="mod">Mod</option>
+                                        <option value="unmod">UnMod</option>
+                                        <option value="other" selected>Other</option>
+                                    <% } %> 
+                                </select>   
+                            </td>
+                            <td class="col-2">
+                                <input type="text" name="Duration" id="duration" placeholder="mm:ss" value="<%= motion.duration %>">
+                            </td>
+                            <td class="col-2">
+                                <input type="text" name="SpeakingTime" id="speakingTime" placeholder="m:ss" value="<%= motion.speakingTime %>">
+                            </td>
+                            <td class="col-3">
+                                <input type="text" name="Topic" id="topic" placeholder="Topic" value="<%= motion.topic %>">
+                                <span class="deleteBtn"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                            </td>
+                        </tr>
+                    <% }) %> 
+                <% } %> 
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container subButtons">
+    <a id="clear" class="subButton">Clear</a>
+    <br>
+    <a id="save" class="subButton">Save</a>
+</div>
+
+
+<script src="/scripts/motions.js"></script>
+
+<%- include('./partials/footer') %> 

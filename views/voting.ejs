@@ -1,0 +1,66 @@
+<%- include('./partials/header') %>
+<link rel="stylesheet" href="/stylesheets/rollCall.css" crossorigin="anonymous">
+<link rel="stylesheet" href="/stylesheets/voting.css" crossorigin="anonymous">
+
+
+</head>
+<body>
+<%- include('./partials/navbar') %>
+<%- include('./partials/sideNav') %>
+<div class="container pt-5">
+    <h1 id="header" class="mb-5"><%= committee.name %></h1>
+    <div id="votingCard" class="text-center">    
+        <h2 class="pt-4">Voting</h2>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <h5 id="halfQuorum">1/2 : 13</h5>
+            </div>
+            <div class="col-auto">
+                <h5 id="twothirdsQuorum">2/3 : 16</h5>
+            </div>
+        </div>
+        
+        <h4 class="mt-4" id="currentDelegation">Delegation</h4>
+        <h6 id="pvIndicator">Present & Voting</h6>
+
+
+        <div class="row justify-content-center mt-3">
+            <div class="col-3">
+                <h4 class="mt-5">In Favour:</h4>
+                <h3 id="yesCount">0</h3>
+            </div>
+            <div class="col-3">
+                <h4 class="mt-5">Against:</h3>
+                <h3 id="noCount">0</h3>
+            </div>
+            <div class="col-3">
+                <h4 class="mt-5">Abstentions:</h4>
+                <h3 id="absCount">0</h3>
+            </div>
+        </div>
+        
+
+        <div class="row buttons justify-content-center">
+            <div class="col-2">
+                <button class="btn btn-success" id="yesBtn">Yes</button>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-danger" id="noBtn">No</button>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-secondary" id="absBtn">Abstain</button>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-info" id="passBtn">Pass</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var json_committee = '<%- JSON.stringify(committee) %>';        
+ </script>
+
+<script src="/scripts/voting.js"></script>
+
+<%- include('./partials/footer') %> 

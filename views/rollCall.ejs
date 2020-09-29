@@ -7,6 +7,7 @@
 <%- include('./partials/sideNav') %>
 <div class="container pt-5">
     <h1 id="header"><%= committee.name %> </h1>
+    <h4 id="header">Roll Call</h4>
     <div class="table-responsive">
         <table class="table table-fixed" id="delTable">
             <thead>
@@ -20,7 +21,7 @@
                 <input type="text" name="delegation" placeholder="Add New Delegation" id="addDel">
                 <% committee.delegations.forEach(function(delegation){ %>
                     <tr id="<%= delegation._id %>">
-                        <td class="col-4" id="name" class="name" contenteditable="true" data-gramm_editor="false" spellcheck="false"><span class="nameText"><%= delegation.name %></span><span class="deleteBtn" contenteditable="false"><i class="fa fa-trash" aria-hidden="true"></i></span></td>
+                        <td class="col-4" id="name" class="name" contenteditable="false"><span class="nameText" contenteditable="true"  data-gramm_editor="false" spellcheck="false"><%= delegation.name %></span><span class="deleteBtn" contenteditable="false"><i class="fa fa-trash" aria-hidden="true"></i></span></td>
                         <% if(delegation.presentVoting == "none"){ %>
                             <td class="col-4 presentSelector"></td>
                             <td class="col-4 presentVotingSelector"></td>

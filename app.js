@@ -8,7 +8,10 @@ var express = require("express"),
 
 var Committee = require("./models/committee"),
     Delegation = require("./models/delegation"),
-    User = require("./models/user")
+    User = require("./models/user"),
+    Motion = require("./models/motion");
+
+const delegation = require("./models/delegation");
 
 var app = express()
 var port = process.env.PORT || 3000;
@@ -20,9 +23,9 @@ var eloRange = 100
 
 
 // seedDB()
-//mongodb://localhost/comparitor
+//mongodb://localhost/munassistant
 //mongodb+srv://tim:loki@ eyelpcamp-mvsim.mongodb.net/yelp_camp?retryWrites=true&w=majority
-mongoose.connect("mongodb://localhost/munassistant", {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect("mongodb+srv://tim:loki@yelpcamp-mvsim.mongodb.net/yelp_camp?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true})
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine','ejs');
 app.use(express.static(__dirname + "/public"));
@@ -88,6 +91,8 @@ app.post("/committees",function(req,res){
         }
     })
 })
+
+// ROLL CALL!
 
 app.get("/:id/rollcall",function(req,res){
     Committee.findById(req.params.id).populate("delegations").exec(function(err,committee){
@@ -170,13 +175,139 @@ app.post("/:id/rollcall",function(req,res){
     })
 })
 
+//SPEAKING LIST!!
+
 app.get("/:id/speakinglist",function(req,res){
-    Committee.findById(req.params.id).populate("delegations").exec(function(err,committee){
+    Committee.findById(req.params.id).populate("speakingList").populate("delegations").exec(function(err,committee){
         res.render("speakinglist",{committee:committee})
     })  
 })
 
+app.post("/:id/speakinglist",function(req,res){
+    Committee.findByIdAndUpdate(
+        { _id: req.params.id},
+        { $set: { speakingList: [] }},
+        function(err,committee){
+            if(err){
+                console.log(err)
+            } else {
+                console.log(committee)
+            }
+        }
+    )
+    req.body.delegations.forEach(function(del){
+        Delegation.findById(del.id,function(err,delegation){
+            if(err){
+                console.log(err)
+            } else {
+                console.log("addingSpeaker")
+                Committee.findByIdAndUpdate(
+                    req.params.id,
+                    { $push: {speakingList: delegation} },
+                    function(err,committee){
+                        if(err){
+                            console.log(err)
+                        } else {
+                            console.log(committee)
+                        }
+                    }
+                )
+            }
+        });
+    })
+    res.redirect("/"+req.params.id+"/speakinglist")
+})
 
+//MOTION GET
+app.get("/:id/motions",function(req,res){
+    Committee.findById(req.params.id).populate("delegations").populate("motions").exec(function(err,committee){
+        console.log(committee.motions)
+        res.render("motions",{committee:committee})
+    })  
+})
+
+//SAVE MOTIONS
+app.post("/:id/motions",function(req,res){
+    Committee.findById(req.params.id,function(err,committee){
+        if(err){
+            console.log(err)
+        }else{
+            committee.motions.forEach(function(motion){
+                Motion.findByIdAndDelete(mongoose.Types.ObjectId(motion.id),function(err,deleted){
+                    if(err){
+                        console.log(err)
+                    }else{
+                        console.log("Deleted")
+                    }
+                })
+            })
+        }
+    })
+    Committee.findByIdAndUpdate(
+        { _id: req.params.id},
+        { $set: { motions: [] }},
+        function(err,committee){
+            if(err){
+                console.log(err)
+            } else {
+                console.log(committee)
+            }
+        }
+    )
+
+    if(req.body.motions!=null){
+        req.body.motions.forEach(function(motion){
+            Delegation.findById(mongoose.Types.ObjectId(motion.delegation),function(err,delegation){
+                Motion.create({
+                    delegation:delegation,
+                    type:motion.type,
+                    duration:motion.duration,
+                    speakingTime:motion.speakingTime,
+                    topic:motion.topic
+                },function(err,newMotion){
+                    Committee.findByIdAndUpdate(
+                        req.params.id,
+                        {$push:{motions:newMotion}},
+                        function(err){
+                            if(err){
+                                console.log(err)
+                            } else {
+                                console.log("added")
+                            }
+                        }
+                    )
+                })
+            })
+        })
+    }
+    
+
+    res.redirect("/"+req.params.id+"/motions")
+})
+
+app.get("/:id/mod",function(req,res){
+    Committee.findById(req.params.id).populate("delegations").exec(function(err,committee){
+        res.render("mod",{committee:committee})
+    })  
+})
+
+app.get("/:id/unmod",function(req,res){
+    Committee.findById(req.params.id).populate("delegations").exec(function(err,committee){
+        res.render("unmod",{committee:committee})
+    })  
+})
+
+app.get("/:id/voting",function(req,res){
+    Committee.findById(req.params.id).populate("delegations").exec(function(err,committee){
+        res.render("voting",{committee:committee})
+    })  
+})
+
+app.get("/:id/statistics",function(req,res){
+    Committee.findById(req.params.id).populate("delegations").exec(function(err,committee){
+        res.render("statistics",{committee:committee})
+    })  
+})
 
 app.listen(port,function(){
     console.log("MUN Assistant has Started")
