@@ -65,7 +65,7 @@ app.get("/",function(req,res){
 })
 
 app.get("/committees",function(req,res){
-    Committee.find({},function(err,committees){
+    Committee.find({creator:req.user},function(err,committees){
         if(err){
             req.flash("error","Something went wrong. Please try again.")
             res.redirect("/")
