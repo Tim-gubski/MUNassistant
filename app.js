@@ -64,8 +64,12 @@ app.get("/",function(req,res){
     res.render("landing")
 })
 
-app.get("/committees",function(req,res){
-    Committee.find({creator:req.user},function(err,committees){
+app.get("/committees",middleware.isLoggedIn,function(req,res){
+    var author = {
+        id: req.user._id,
+        username: req.user.username
+    }
+    Committee.find({author:author},function(err,committees){
         if(err){
             req.flash("error","Something went wrong. Please try again.")
             res.redirect("/")
@@ -76,12 +80,16 @@ app.get("/committees",function(req,res){
     
 })
 
-app.get("/committees/new",function(req,res){
+app.get("/committees/new",middleware.isLoggedIn,function(req,res){
     res.render("newCommittee")
 })
 
-app.post("/committees",function(req,res){
-    Committee.create({name:req.body.name, user:req.user},function(err,newCommittee){
+app.post("/committees",middleware.isLoggedIn,function(req,res){
+    var author = {
+        id: req.user._id,
+        username: req.user.username
+    }
+    Committee.create({name:req.body.name, author:author},function(err,newCommittee){
         if(err){
             req.flash("error","Something went wrong. Please try again.")
             res.redirect("/committees/new")
@@ -94,14 +102,14 @@ app.post("/committees",function(req,res){
 
 // ROLL CALL!
 
-app.get("/:id/rollcall",function(req,res){
+app.get("/:id/rollcall",middleware.isLoggedIn,function(req,res){
     Committee.findById(req.params.id).populate("delegations").exec(function(err,committee){
         // console.log(committee)
         res.render("rollCall",{committee:committee})
     })  
 })
 
-app.post("/:id/rollcall",function(req,res){
+app.post("/:id/rollcall",middleware.isLoggedIn,function(req,res){
     Committee.findById(req.params.id).populate("delegations").exec(function(err,committee){
         if(err){
             console.log(err)
@@ -177,13 +185,13 @@ app.post("/:id/rollcall",function(req,res){
 
 //SPEAKING LIST!!
 
-app.get("/:id/speakinglist",function(req,res){
+app.get("/:id/speakinglist",middleware.isLoggedIn,function(req,res){
     Committee.findById(req.params.id).populate("speakingList").populate("delegations").exec(function(err,committee){
         res.render("speakinglist",{committee:committee})
     })  
 })
 
-app.post("/:id/speakinglist",function(req,res){
+app.post("/:id/speakinglist",middleware.isLoggedIn,function(req,res){
     Committee.findByIdAndUpdate(
         { _id: req.params.id},
         { $set: { speakingList: [] }},
@@ -219,7 +227,7 @@ app.post("/:id/speakinglist",function(req,res){
 })
 
 //MOTION GET
-app.get("/:id/motions",function(req,res){
+app.get("/:id/motions",middleware.isLoggedIn,function(req,res){
     Committee.findById(req.params.id).populate("delegations").populate("motions").exec(function(err,committee){
         console.log(committee.motions)
         res.render("motions",{committee:committee})
@@ -227,7 +235,7 @@ app.get("/:id/motions",function(req,res){
 })
 
 //SAVE MOTIONS
-app.post("/:id/motions",function(req,res){
+app.post("/:id/motions",middleware.isLoggedIn,function(req,res){
     Committee.findById(req.params.id,function(err,committee){
         if(err){
             console.log(err)
@@ -285,25 +293,25 @@ app.post("/:id/motions",function(req,res){
     res.redirect("/"+req.params.id+"/motions")
 })
 
-app.get("/:id/mod",function(req,res){
+app.get("/:id/mod",middleware.isLoggedIn,function(req,res){
     Committee.findById(req.params.id).populate("delegations").exec(function(err,committee){
         res.render("mod",{committee:committee})
     })  
 })
 
-app.get("/:id/unmod",function(req,res){
+app.get("/:id/unmod",middleware.isLoggedIn,function(req,res){
     Committee.findById(req.params.id).populate("delegations").exec(function(err,committee){
         res.render("unmod",{committee:committee})
     })  
 })
 
-app.get("/:id/voting",function(req,res){
+app.get("/:id/voting",middleware.isLoggedIn,function(req,res){
     Committee.findById(req.params.id).populate("delegations").exec(function(err,committee){
         res.render("voting",{committee:committee})
     })  
 })
 
-app.get("/:id/statistics",function(req,res){
+app.get("/:id/statistics",middleware.isLoggedIn,function(req,res){
     Committee.findById(req.params.id).populate("delegations").exec(function(err,committee){
         res.render("statistics",{committee:committee})
     })  
