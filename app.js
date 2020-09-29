@@ -81,7 +81,7 @@ app.get("/committees/new",function(req,res){
 })
 
 app.post("/committees",function(req,res){
-    Committee.create({name:req.body.name},function(err,newCommittee){
+    Committee.create({name:req.body.name, user:req.user},function(err,newCommittee){
         if(err){
             req.flash("error","Something went wrong. Please try again.")
             res.redirect("/committees/new")
