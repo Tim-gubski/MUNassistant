@@ -19,7 +19,7 @@ router.post("/register",function(req,res){
         }
         passport.authenticate("local")(req,res,function(){
             req.flash("success", "Welcome to Misogyny Inc." + user.username);
-            res.redirect("/committees");
+            res.redirect("/rollcall");
         })
     });
 })
