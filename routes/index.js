@@ -18,7 +18,7 @@ router.post("/register",function(req,res){
             res.redirect("/register")
         }
         passport.authenticate("local")(req,res,function(){
-            req.flash("success", "Welcome to Misogyny Inc." + user.username);
+            req.flash("success", "Welcome to MUN Assistant" + user.username);
             res.redirect("/rollcall");
         })
     });
